@@ -14,6 +14,7 @@ import javafx.util.Duration;
 import lk.ijse.gdse.tictactoe.AiPlayer;
 import lk.ijse.gdse.tictactoe.BoardImpl;
 import lk.ijse.gdse.tictactoe.Piece;
+import lk.ijse.gdse.tictactoe.Winner;
 
 import java.io.IOException;
 
@@ -106,7 +107,7 @@ public class BoardController {
     }
     @FXML
     private boolean checkGameState(Piece currentPlayerPiece) {
-        if (board.checkWinner() != Piece.EMPTY) {
+        if (board.checkWinner() != null) {
             lblLable.setText("Player " + (currentPlayerPiece == Piece.X ? "X" : "O") + " wins!");
             disableBoard();
             return true;
@@ -119,6 +120,7 @@ public class BoardController {
             return false;
         }
     }
+
     @FXML
     private void updateBoardUI() {
         // Update the UI with AI's move
@@ -165,38 +167,3 @@ public class BoardController {
         }
     }
 }
-//@FXML
-//public void handleButtonClick(ActionEvent event) {
-//    Button clickedButton = (Button) event.getSource();
-//    int row = GridPane.getRowIndex(clickedButton);
-//    int col = GridPane.getColumnIndex(clickedButton);
-//
-//    if (board.isLegalMove(row, col)) {
-//        // Human (X) move
-//        clickedButton.setText("X");
-//        clickedButton.setTextFill(Color.LIGHTGREEN);
-//        //clickedButton.setBlendMode(BlendMode.SCREEN);
-//        board.updateMove(row, col, Piece.X);
-//        board.printBoard();
-////            updateButtonBorderColor(clickedButton, "X");
-////            updateButtonBorderColor(clickedButton, "0");
-//
-//        // Check for a winner or tie after the human move
-//        if (checkGameState(Piece.X)) return;
-//
-//        // Pause for 2 seconds before AI move
-//        PauseTransition pause = new PauseTransition(Duration.seconds(1));
-//        pause.setOnFinished(e -> {
-//            aiPlayerMove();
-//        });
-//        pause.play();
-//    }
-//}
-//private void aiPlayerMove() {
-//    // AI calculates its move and updates the board
-//    aiPlayer.Move(-1, -1);  // Pass -1, -1 to let AI choose the move
-//    updateBoardUI();  // Update the buttons in the UI with AI's move
-//    board.printBoard();
-//    // Check for a winner or tie after the AI move
-//    checkGameState(Piece.O);
-//}

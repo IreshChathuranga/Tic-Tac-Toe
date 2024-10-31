@@ -45,15 +45,15 @@ public class AiPlayer extends Player {
     }
 
     private int minimax(BoardImpl board, int depth, boolean isMaximizing) {
-        Piece winner = board.checkWinner();
+        Winner winner = board.checkWinner();
 
         // Check terminal states and return the corresponding score
-        if (winner == Piece.O) {
-            return 1; // AI wins
-        } else if (winner == Piece.X) {
-            return -1; // Human wins
-        } else if (board.isFull()) {
-            return 0; // Draw
+        if (winner != null) {
+            if (winner.getWinningPiece() == Piece.O) {
+                return 10 - depth;
+            } else if (winner.getWinningPiece() == Piece.X) {
+                return depth - 10;
+            }
         }
 
         if (isMaximizing) {

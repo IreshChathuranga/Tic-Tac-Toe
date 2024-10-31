@@ -1,54 +1,53 @@
 package lk.ijse.gdse.tictactoe;
 
 public class BoardImpl implements Board {
-    private Piece[][] board;
+    private Piece[][] pieces ;
 
     public BoardImpl() {
         initializeBoard();
     }
     @Override
     public void initializeBoard() {
-        board = new Piece[3][3];
+        pieces = new Piece[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                board[i][j] = Piece.EMPTY;
+                pieces[i][j] = Piece.EMPTY;
             }
         }
     }
     @Override
     public boolean isLegalMove(int row, int col) {
-        return board[row][col] == Piece.EMPTY;
+        return pieces[row][col] == Piece.EMPTY;
     }
 
     @Override
     public void updateMove(int row, int col, Piece piece) {
-        board[row][col] = piece;
+        pieces[row][col] = piece;
     }
 
     @Override
-    public Piece checkWinner() {
-        // Check rows, columns, and diagonals for a winner
+    public Winner checkWinner() {
         for (int i = 0; i < 3; i++) {
-            if (board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != Piece.EMPTY) {
-                return board[i][0];
+            if (pieces[i][0] == pieces[i][1] && pieces[i][0] == pieces[i][2] && pieces[i][0] != Piece.EMPTY) {
+                return new Winner(0, i, 1, i, 2, i, pieces[i][0]);
             }
-            if (board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != Piece.EMPTY) {
-                return board[0][i];
+            if (pieces[0][i] == pieces[1][i] && pieces[0][i] == pieces[2][i] && pieces[0][i] != Piece.EMPTY) {
+                return new Winner(i, 0, i, 1, i, 2, pieces[0][i]);
             }
         }
-        if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != Piece.EMPTY) {
-            return board[0][0];
+        if (pieces[0][0] == pieces[1][1] && pieces[0][0] == pieces[2][2] && pieces[0][0] != Piece.EMPTY) {
+            return new Winner(0, 0, 1, 1, 2, 2, pieces[0][0]);
         }
-        if (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[0][2] != Piece.EMPTY) {
-            return board[0][2];
+        if (pieces[0][2] == pieces[1][1] && pieces[0][2] == pieces[2][0] && pieces[0][2] != Piece.EMPTY) {
+            return new Winner(0, 2, 1, 1, 2, 0, pieces[0][2]);
         }
-        return Piece.EMPTY;
+        return null;
     }
     @Override
     public boolean isFull() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (board[i][j] == Piece.EMPTY) {
+                if (pieces[i][j] == Piece.EMPTY) {
                     return false;
                 }
             }
@@ -59,7 +58,7 @@ public class BoardImpl implements Board {
     public void printBoard() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                System.out.print(board[i][j] + " ");
+                System.out.print(pieces[i][j] + " ");
             }
             System.out.println();
         }
@@ -68,7 +67,7 @@ public class BoardImpl implements Board {
 
 
     public Piece getPiece(int row, int col) {
-        return board[row][col];
+        return pieces[row][col];
     }
 
 }
